@@ -22,7 +22,7 @@ namespace Aplikacja
             this.Nrdomu = nrdomu;
             this.Nrmieszkania = nrmieszkania;
         }
-
+        public DaneAdresowe() { }
         public string Kodpoczt { get => kodpoczt; set => kodpoczt = value; }
         public string Miasto { get => miasto; set => miasto = value; }
         public string Ulica { get => ulica; set => ulica = value; }

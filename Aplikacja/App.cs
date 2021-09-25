@@ -21,33 +21,27 @@ namespace Aplikacja
         protected static List<Osoba> listaow = new List<Osoba>();
 
         public App() { }
-        public void wczytaj()
+
+        public void wyszukaj(string str, string sub)
         {
-            /////// Wczytywanie
-            ///
-            string wczytaj=zplikuxD():
-            listao = zpilkuxD();
+            switch (sub) {
+                case "imie":
+                listao.Find(x => x.Imie.Contains(str));
+                break;
+                case "nazwisko":
+                    listao.Find(x => x.Nazwisko.Contains(str));
+                break;
+            }
 
         }
-        public void zapisz()
+        public void usuń(int id)
         {
-
-            doplikuxd(listao);
+            listao.Remove(new Osoba() { Id = id }) ;
 
         }
-        public void wyszukaj()
+        public void dodaj(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania)
         {
-
-
-        }
-        public void usuń()
-        {
-
-
-        }
-        public void dodaj()
-        {
-
+            listao.Add(new Osoba(imie, nazwisko, wiek, plec, kodpoczt, miasto, ulica, nrdomu, nrmieszkania, listao.Last().Id+1));
 
         }
         public void wypisz()
@@ -59,7 +53,7 @@ namespace Aplikacja
             }
 
         }
-        public static void WriteObject()
+        public void zapisz()
         {
 
             FileStream writer = new System.IO.FileStream("data.txt", FileMode.Create);
@@ -69,7 +63,7 @@ namespace Aplikacja
             writer.Close();
         }
 
-        public static void ReadObject()
+        public void wczytaj()
         {
             FileStream fs = new FileStream("data.txt",
             FileMode.Open);
