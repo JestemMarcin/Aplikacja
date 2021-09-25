@@ -59,33 +59,28 @@ namespace Aplikacja
             }
 
         }
-        public static void WriteObject(string fileName)
+        public static void WriteObject()
         {
 
-            FileStream writer = new System.IO.FileStream(fileName, FileMode.Create);
+            FileStream writer = new System.IO.FileStream("data.txt", FileMode.Create);
             DataContractSerializer ser =
                 new DataContractSerializer(typeof(List<Osoba>));
             ser.WriteObject(writer, listao);
             writer.Close();
         }
 
-        public static void ReadObject(string fileName)
+        public static void ReadObject()
         {
-            Console.WriteLine("Deserializing an instance of the object.");
-            FileStream fs = new FileStream(fileName,
+            FileStream fs = new FileStream("data.txt",
             FileMode.Open);
             XmlDictionaryReader reader =
                 XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-            DataContractSerializer ser = new DataContractSerializer(typeof(Person));
+            DataContractSerializer ser = new DataContractSerializer(typeof(List<Osoba>));
 
             // Deserialize the data and read it from the instance.
-            Person deserializedPerson =
-                (Person)ser.ReadObject(reader, true);
+            listao =(List<Osoba>)ser.ReadObject(reader, true);
             reader.Close();
             fs.Close();
-            Console.WriteLine(String.Format("{0} {1}, ID: {2}",
-            deserializedPerson.FirstName, deserializedPerson.LastName,
-            deserializedPerson.ID));
         }
 
     }
