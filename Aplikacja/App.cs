@@ -22,7 +22,7 @@ namespace Aplikacja
 
         public App() { }
 
-        public void wyszukaj(string str, string sub)
+        protected void wyszukaj(string str, string sub)
         {
             List<Osoba> lista = new List<Osoba>();
 
@@ -38,17 +38,17 @@ namespace Aplikacja
             wypisz(lista);
 
         }
-        public void usuń(int id)
+        protected void usuń(int id)
         {
             listao.Remove(new Osoba() { Id = id }) ;
 
         }
-        public void dodaj(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania)
+        protected void dodaj(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania)
         {
             listao.Add(new Osoba(imie, nazwisko, wiek, plec, kodpoczt, miasto, ulica, nrdomu, nrmieszkania, listao.Last().Id+1));
 
         }
-        public void wypisz(List<Osoba> lista)
+        protected void wypisz(List<Osoba> lista)
         {
             Console.WriteLine();
             foreach (Osoba osoba in lista)
@@ -79,6 +79,39 @@ namespace Aplikacja
             listao =(List<Osoba>)ser.ReadObject(reader, true);
             reader.Close();
             fs.Close();
+        }
+
+        public void CommandsInit()
+        {
+            bool check = true;
+            while (check)
+            {
+                string command = Console.ReadLine();
+                List<string> args = new List<string>();
+                bool check2 = true;
+                while (check2) {
+                    int index = command.IndexOf(' ');
+                    if (index == -1)
+                    {
+                        check2 = false;
+                        args.Add(command);
+                    }
+                    else
+                    {
+                        args.Add(command.Substring(0, index));
+                    }
+
+
+                }
+                switch (command[0])
+                {
+
+                    case "selectall":
+                        Console.WriteLine();
+                    break;
+
+                }
+            }
         }
 
     }
