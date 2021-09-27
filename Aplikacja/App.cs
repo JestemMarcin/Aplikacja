@@ -22,7 +22,7 @@ namespace Aplikacja
 
         public App() { }
 
-        protected void wyszukaj(string str, string sub)
+        protected void wyszukaj(string sub,string str)
         {
             List<Osoba> lista = new List<Osoba>();
 
@@ -41,11 +41,13 @@ namespace Aplikacja
         protected void usuń(int id)
         {
             listao.Remove(new Osoba() { Id = id }) ;
+            Console.WriteLine("Usunięto osobę o id {0}", id);
 
         }
         protected void dodaj(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania)
         {
             listao.Add(new Osoba(imie, nazwisko, wiek, plec, kodpoczt, miasto, ulica, nrdomu, nrmieszkania, listao.Last().Id+1));
+            Console.WriteLine("Dodano nową osobe {0} {1}",imie,nazwisko);
 
         }
         protected void wypisz(List<Osoba> lista)
@@ -103,11 +105,29 @@ namespace Aplikacja
 
 
                 }
-                switch (command[0])
+                switch (args[0])
                 {
-
+                    case "help":
+                        Console.WriteLine("Lista Komend");
+                    break;
                     case "selectall":
-                        Console.WriteLine();
+                        wypisz(listao);
+                    break;
+                    case "select":
+                        wyszukaj(args[1], args[2]);
+                    break;
+                    case "exit":
+                        zapisz();
+                        check = false;
+                    break;
+                    case "default":
+                        Console.WriteLine("There is no command like that")
+                    break;
+                    case "newperson":
+                    dodaj(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]])
+                    break;
+                    case "delperson":
+
                     break;
 
                 }
