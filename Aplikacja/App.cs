@@ -18,20 +18,24 @@ namespace Aplikacja
 
         protected static List<Osoba> listao = new List<Osoba>();
 
-        protected static List<Osoba> listaow = new List<Osoba>();
+
 
         public App() { }
 
         public void wyszukaj(string str, string sub)
         {
-            switch (sub) {
+            List<Osoba> lista = new List<Osoba>();
+
+            switch (sub)
+            {
                 case "imie":
-                listao.Find(x => x.Imie.Contains(str));
-                break;
+                    lista = listao.FindAll(x => x.Imie.Contains(str));
+                    break;
                 case "nazwisko":
-                    listao.Find(x => x.Nazwisko.Contains(str));
-                break;
+                    lista = listao.FindAll(x => x.Nazwisko.Contains(str));
+                    break;
             }
+            wypisz(lista);
 
         }
         public void usuń(int id)
@@ -44,10 +48,10 @@ namespace Aplikacja
             listao.Add(new Osoba(imie, nazwisko, wiek, plec, kodpoczt, miasto, ulica, nrdomu, nrmieszkania, listao.Last().Id+1));
 
         }
-        public void wypisz()
+        public void wypisz(List<Osoba> lista)
         {
             Console.WriteLine();
-            foreach (Osoba osoba in listao)
+            foreach (Osoba osoba in lista)
             {
                 Console.WriteLine($"Imie {osoba.Imie} Nazwisko {osoba.Nazwisko} Wiek {osoba.Wiek} Plec {osoba.Plec} Osoba {osoba.Imie} Adres {osoba.Kodpoczt} Miasto {osoba.Miasto} Ulica {osoba.Ulica} NrDomu {osoba.Nrdomu}  NrDomu {osoba.Nrmieszkania} ");
             }

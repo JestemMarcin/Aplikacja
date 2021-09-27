@@ -4,7 +4,7 @@
     {
         void wczytaj();
         void wypisz();
-        void wyszukaj(string str*);
+        void wyszukaj(string str);
         void zapisz();
     }
 }
