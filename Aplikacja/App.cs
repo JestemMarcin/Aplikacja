@@ -20,18 +20,56 @@ namespace Aplikacja
         protected void wyszukaj(string sub,string str)
         {
             List<Osoba> lista = new List<Osoba>();
-
-            switch (sub)
+            if (sub == "wiek" || sub == "nrdomu" || sub == "nrmieszkania")
             {
-                case "imie":
-                    lista = listao.FindAll(x => x.Imie.Contains(str));
-                    break;
-                case "nazwisko":
-                    lista = listao.FindAll(x => x.Nazwisko.Contains(str));
-                    break;
-                default:
-                    Console.WriteLine("Zły arguemnt, pierwszy argument komendy powinien być 'imie' lub 'nazwisko'");
-                    break;
+                try
+                {
+                    int strr = Int32.Parse(str);
+                    switch (sub)
+                    {
+                        case "wiek":
+                            lista = listao.FindAll(item => item.Wiek == strr);
+                            break;
+                        case "nrdomu":
+                            lista = listao.FindAll(item => item.adres.Nrdomu == strr);
+                            break;
+                        case "nrmieszkania":
+                            lista = listao.FindAll(item => item.adres.Nrmieszkania == strr);
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Argumenty dla właściwości wiek, nr domu i nr mieszkania powinien być liczbom");
+                }
+
+            }
+            else
+            {
+                switch (sub)
+                {
+                    case "imie":
+                        lista = listao.FindAll(x => x.Imie.Contains(str));
+                        break;
+                    case "nazwisko":
+                        lista = listao.FindAll(x => x.Nazwisko.Contains(str));
+                        break;
+                    case "plec":
+                        lista = listao.FindAll(x => x.Plec.Contains(str));
+                        break;
+                    case "kodpocztowy":
+                        lista = listao.FindAll(x => x.adres.Kodpoczt.Contains(str));
+                        break;
+                    case "miasto":
+                        lista = listao.FindAll(x => x.adres.Miasto.Contains(str));
+                        break;
+                    case "ulica":
+                        lista = listao.FindAll(x => x.adres.Ulica.Contains(str));
+                        break;
+                    default:
+                        Console.WriteLine("Zły arguemnt, pierwszy argument komendy powinien być nazwa zmienianego pola");
+                        break;
+                }
             }
             wypisz(lista);
 
@@ -107,15 +145,14 @@ namespace Aplikacja
             Console.WriteLine(@"Lista komend
 'help' - wypisuje liste komend
 'showall' - wypisuje wszystkie osoby
-'select' - pozwala wyszukiwać osoby po imieniu lub nazwisko pierwszy argumentem
-musi być ciąg znaków 'imie' lub 'nazwisko' drugim argumentem jest ciąg znaków który
-jest wyszukiwany np.imie 'Marcin'
+'select' - pozwala wyszukiwać osoby po nazwie pola tj. imie, nazwisko, wiek, plec, kodpocztowy, miasto, ulica, nrdomu, nrmieszkania,
+    np. select kodpocztowy 32-086      wiek,nrdomu i nrmieszkania muszą być liczbą 
 'exit' - kończy wczytywanie komend, automatycznie przejdzie do zapisywania do pliku w tym
-przypadku, jeśli wyszlibyśmy z programu krzyżykiem, nasze zmiany nie zapiszą się
-'newperson' - tworzy nową osobę potrzebuje 9 argumentów w czym 3,8,9 musi być liczbą np.
-'newperson twojeimie twojenazwisko twójwiek twojapłeć kodpocztowy miasto ulica nrdomu nrmieszkania
+    przypadku, jeśli wyszlibyśmy z programu krzyżykiem, nasze zmiany nie zapiszą się
+'newperson' - tworzy nową osobę potrzebuje 9 argumentów w czym 3,8,9 musi być liczbą 
+    np. newperson Maciej BB 21 K 22-111 Poznań ul.Zielona 1 1
 'delperson' - usuwa osobę pobierając jeden argument 'id' osoby którą chcemy usunąć np.
-'delperson 1' usunie osobe o id 1
+    'delperson 1' usunie osobe o id 1
 ");
         }
         public void commandsInit()
