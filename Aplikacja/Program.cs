@@ -11,7 +11,11 @@ namespace Aplikacja
 
         static void Main(string[] args)
         {
-            Console.log("*aa");
+            IApp apka = new App();
+            apka.wczytaj();
+            apka.welcomeMessage();
+            apka.commandsInit();
+            apka.zapisz();
         }
     } 
 }

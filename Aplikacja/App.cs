@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml;
 using System.IO;
@@ -16,7 +11,7 @@ namespace Aplikacja
     public class App : IApp
     {
 
-        protected static List<Osoba> listao = new List<Osoba>();
+        protected List<Osoba> listao = new List<Osoba>();
 
 
 
@@ -46,17 +41,25 @@ namespace Aplikacja
         }
         protected void dodaj(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania)
         {
-            listao.Add(new Osoba(imie, nazwisko, wiek, plec, kodpoczt, miasto, ulica, nrdomu, nrmieszkania, listao.Last().Id+1));
+            int id;
+            if(listao.Count>0)id = listao.Last().Id + 1;
+            else id = 0;
+            listao.Add(new Osoba(imie, nazwisko, wiek, plec, kodpoczt, miasto, ulica, nrdomu, nrmieszkania, id));
             Console.WriteLine("Dodano nową osobe {0} {1}",imie,nazwisko);
 
         }
         protected void wypisz(List<Osoba> lista)
         {
             Console.WriteLine();
-            foreach (Osoba osoba in lista)
+            if (lista.Count > 0)
             {
-                Console.WriteLine($"Imie {osoba.Imie} Nazwisko {osoba.Nazwisko} Wiek {osoba.Wiek} Plec {osoba.Plec} Osoba {osoba.Imie} Adres {osoba.Kodpoczt} Miasto {osoba.Miasto} Ulica {osoba.Ulica} NrDomu {osoba.Nrdomu}  NrDomu {osoba.Nrmieszkania} ");
+                Console.WriteLine($"Imie \t Nazwisko \t Wiek \t Plec \t Osoba \t Adres \t Miasto \t  Ulica \t NrDomu \t  NrDomu");
+                foreach (Osoba osoba in lista)
+                {
+                    Console.WriteLine($"{osoba.Imie}\t{osoba.Nazwisko}\t{osoba.Wiek}\t{osoba.Plec}\t{osoba.Imie}\t{osoba.adres.Kodpoczt}\t{osoba.adres.Miasto}\t{osoba.adres.Ulica}\t{osoba.adres.Nrdomu}\t{osoba.adres.Nrmieszkania} ");
+                }
             }
+            else Console.WriteLine("Brak osób do wyświetlenia.");
 
         }
         public void zapisz()
@@ -72,18 +75,25 @@ namespace Aplikacja
         public void wczytaj()
         {
             FileStream fs = new FileStream("data.txt",
-            FileMode.Open);
-            XmlDictionaryReader reader =
-                XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-            DataContractSerializer ser = new DataContractSerializer(typeof(List<Osoba>));
+            FileMode.OpenOrCreate);
+            if (fs.Length == 0){ Console.WriteLine("plik jest pusty"); }
+            else
+            {
+                XmlDictionaryReader reader =
+                    XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+                DataContractSerializer ser = new DataContractSerializer(typeof(List<Osoba>));
 
-            // Deserialize the data and read it from the instance.
-            listao =(List<Osoba>)ser.ReadObject(reader, true);
-            reader.Close();
+                listao = (List<Osoba>)ser.ReadObject(reader, true);
+                reader.Close();
+            }
             fs.Close();
         }
+        public void welcomeMessage()
+        {
 
-        public void CommandsInit()
+            Console.WriteLine("Aby zobaczyć komendy wpisz 'help', aby zakończyć aplikacje wpisz 'exit' tylko wtedy twój progress zapisze się do pliku.");
+        }
+        public void commandsInit()
         {
             bool check = true;
             while (check)
@@ -101,35 +111,48 @@ namespace Aplikacja
                     else
                     {
                         args.Add(command.Substring(0, index));
+                        command = command.Substring(index+1);
+                        
                     }
 
 
                 }
+                
                 switch (args[0])
                 {
                     case "help":
                         Console.WriteLine("Lista Komend");
                     break;
-                    case "selectall":
+                    case "showall":
                         wypisz(listao);
                     break;
                     case "select":
-                        wyszukaj(args[1], args[2]);
-                    break;
+                        if (args.Count() == 3)
+                            wyszukaj(args[1], args[2]);
+                        else
+                        Console.WriteLine("Komenda select wymaga 2 argumentów");
+                        break;
                     case "exit":
-                        zapisz();
                         check = false;
                     break;
                     case "default":
-                        Console.WriteLine("There is no command like that")
+                        Console.WriteLine("There is no command like that");
                     break;
                     case "newperson":
-                    dodaj(args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]])
+                        if (args.Count() == 10)
+                            dodaj(args[1], args[2], args[3], args[4], args[5], args[6], args[7], Int32.Parse(args[8]), Int32.Parse(args[9]));
+                        else 
+                            Console.WriteLine("Komenda new person wymaga 9 argumentów");
                     break;
                     case "delperson":
-
+                        if (args.Count() == 2)
+                            usuń(Int32.Parse(args[1]));
+                        else
+                        Console.WriteLine("Komenda delperson wymaga 1 argumentu");
+                        break;
+                    default:
+                        Console.WriteLine("Nie rozpoznano komendy {0}", args[0]);
                     break;
-
                 }
             }
         }

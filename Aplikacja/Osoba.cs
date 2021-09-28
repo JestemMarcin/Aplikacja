@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace Aplikacja
 {
-    public class Osoba : DaneAdresowe
+    public class Osoba 
     {
         private string plec;
         private string imie;
         private string nazwisko;
         private string wiek;
         private int id;
-        private DaneAdresowe adres;
-        public Osoba(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania,int id) : base( kodpoczt,  miasto,  ulica,  nrdomu,  nrmieszkania)
+        public DaneAdresowe adres;
+        public Osoba(string imie, string nazwisko, string wiek, string plec, string kodpoczt, string miasto, string ulica, int nrdomu, int nrmieszkania,int id) 
         {
             this.Imie = imie;
             this.Nazwisko = nazwisko;
             this.Wiek = wiek;
             this.Plec = plec;
             this.Id = id;
+            this.adres = new DaneAdresowe(kodpoczt, miasto, ulica, nrdomu, nrmieszkania);
         }
         public Osoba() { }
         
