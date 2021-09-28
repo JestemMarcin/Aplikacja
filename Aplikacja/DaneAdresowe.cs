@@ -27,6 +27,6 @@ namespace Aplikacja
         public string Miasto { get => miasto; set => miasto = value; }
         public string Ulica { get => ulica; set => ulica = value; }
         public int Nrdomu { get => nrdomu; set => nrdomu = value; }
-        public int Nrmieszkania { get => nrmieszkania; set => nrmieszkania = value; } // TRZA POPRAWIĆ SETTERY ?????:!!!!!!!
+        public int Nrmieszkania { get => nrmieszkania; set => nrmieszkania = value; } 
     }
 }
