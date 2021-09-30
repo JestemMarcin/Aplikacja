@@ -160,6 +160,7 @@ namespace Aplikacja
             bool check = true;
             while (check)
             {
+                Console.Write(">>");
                 string command = Console.ReadLine();
                 List<string> args = new List<string>();
                 bool check2 = true;
