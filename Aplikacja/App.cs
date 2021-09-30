@@ -100,10 +100,10 @@ namespace Aplikacja
             Console.WriteLine();
             if (lista.Count > 0)
             {
-                Console.WriteLine($"ID\t Imie \t Nazwisko \t Wiek \t Plec \t Osoba \t Adres \t Miasto \t  Ulica \t NrDomu \t  NrDomu");
+                Console.WriteLine($"ID\t Imie \t Nazwisko \t Wiek \t Plec \t kodpocztowy \t Miasto \t  Ulica \t NrDomu \t  NrMieszkania");
                 foreach (Osoba osoba in lista)
                 {
-                    Console.WriteLine($"{osoba.Id}\t{osoba.Imie}\t{osoba.Nazwisko}\t{osoba.Wiek}\t{osoba.Plec}\t{osoba.Imie}\t{osoba.adres.Kodpoczt}\t{osoba.adres.Miasto}\t{osoba.adres.Ulica}\t{osoba.adres.Nrdomu}\t{osoba.adres.Nrmieszkania} ");
+                    Console.WriteLine($"{osoba.Id}\t{osoba.Imie}\t{osoba.Nazwisko}\t{osoba.Wiek}\t{osoba.Plec}\t{osoba.adres.Kodpoczt}\t{osoba.adres.Miasto}\t{osoba.adres.Ulica}\t{osoba.adres.Nrdomu}\t{osoba.adres.Nrmieszkania} ");
                 }
             }
             else Console.WriteLine("Brak osób do wyświetlenia.");
